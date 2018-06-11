@@ -8,5 +8,5 @@ public interface UserService {
 	public User findUserByEmail(String email);
 	public void saveUser(User user);
 	public Set<User> findAllUsersById();
-	public void deleteUser(int id);
+	public void deleteUser(long id);
 }
