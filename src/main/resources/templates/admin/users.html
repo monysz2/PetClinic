@@ -9,7 +9,19 @@
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
-
+	<script>
+		function setUserDetails(name,lastName,pesel,city,zipCode,street,building,flat,phone) {
+		    document.getElementById('detailName').innerHTML=name;
+		    document.getElementById('detailLastName').innerHTML=lastName;
+		    document.getElementById('detailPesel').innerHTML=pesel;
+		    document.getElementById('detailCity').innerHTML=city;
+		    document.getElementById('detailZipCode').innerHTML=zipCode;
+		    document.getElementById('detailStreet').innerHTML=street;
+		    document.getElementById('detailBuilding').innerHTML=building;
+		    document.getElementById('detailFlat').innerHTML=flat;
+		    document.getElementById('detailPhone').innerHTML=phone;
+        };
+	</script>
 </head>
 
 <body>
@@ -30,6 +42,7 @@
 					<th scope="col">NAME</th>
 					<th scope="col">PASSWORD</th>
 					<th scope="col">ROLE</th>
+					<th colspan="2">OPTIONS</th>
 				</tr>
 				</thead>
 				<tbody>
@@ -42,11 +55,14 @@
 					<td th:text="${user1.getPassword()}"></td>
 					<td th:text="${user1.getRole()}"></td>
 					<td>
-						<form th:action="@{/admin/deleteUser/{id}(id=${user1.getId()})}" method="post" class="form-horizontal"
-							  role="form">
-							<button type="submit" class="btn btn-danger" >Delete</button>
-						</form>
-
+						<button id="edit" th:onclick="|setUserDetails('${user1.getName()}','${user1.getLastName()}','${user1.getPesel()}','${user1.getCity()}','${user1.getZipCode()}','${user1.getStreet()}','${user1.getBuilding()}','${user1.getFlat()}','${user1.getPhone()}')|" type="button" class="btn btn-primary"  data-toggle="modal" data-target="#userDetailModal">
+							Details
+						</button>
+					</td>
+					<td>
+						<button id="delete" th:onclick="|setBookIdToDelete(${user1.getId()})|" type="button" class="btn btn-danger"  data-toggle="modal" data-target="#userDetail111Modal">
+							Delete
+						</button>
 					</td>
 
 				</tr>
@@ -141,5 +157,64 @@
 
 		</div>
 	</div>
+
+
+	<div class="modal fade" id="userDetailModal" tabindex="-1" role="dialog" aria-labelledby="userDetailModal" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="userDetailModalTitle">User details</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<table class="table table-striped">
+						<tr>
+							<td>Name</td>
+							<td id="detailName"></td>
+						</tr>
+						<tr>
+							<td>Last name</td>
+							<td id="detailLastName"></td>
+						</tr>
+						<tr>
+							<td>PESEL</td>
+							<td id="detailPesel"></td>
+						</tr>
+						<tr>
+							<td>City</td>
+							<td id="detailCity"></td>
+						</tr>
+						<tr>
+							<td>ZIP code</td>
+							<td id="detailZipCode"></td>
+						</tr>
+						<tr>
+							<td>Street</td>
+							<td id="detailStreet"></td>
+						</tr>
+						<tr>
+							<td>Building</td>
+							<td id="detailBuilding"></td>
+						</tr>
+						<tr>
+							<td>Flat</td>
+							<td id="detailFlat"></td>
+						</tr>
+						<tr>
+							<td>Phone</td>
+							<td id="detailPhone"></td>
+						</tr>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+					<a href="#" id="deleteHref" class="btn btn-primary">Delete anyway</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
 </body>
 </html>
