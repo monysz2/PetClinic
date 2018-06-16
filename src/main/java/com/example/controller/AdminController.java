@@ -1,6 +1,8 @@
 package com.example.controller;
 
+import com.example.model.Role;
 import com.example.model.User;
+import com.example.service.RoleService;
 import com.example.service.UserService;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.jws.WebParam;
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Set;
 
 @Controller
@@ -21,12 +24,17 @@ public class AdminController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    RoleService roleService;
+
     @RequestMapping(value = "/admin/users", method = RequestMethod.GET)
     public ModelAndView listUsers()
     {
         ModelAndView modelAndView = new ModelAndView();
         User user = new User();
         Set<User> users = userService.findAllUsersById();
+        List<Role> roles = roleService.findAll();
+        modelAndView.addObject("roles",roles);
         modelAndView.addObject("users",users);
         modelAndView.addObject("user",user);
         modelAndView.setViewName("admin/users");
@@ -37,19 +45,28 @@ public class AdminController {
     public ModelAndView addUser(@Valid User user, BindingResult bindingResult)
     {
         ModelAndView modelAndView = new ModelAndView();
-        User toUpdate = userService.findUserByEmail(user.getEmail());
-        toUpdate.setBuilding(user.getBuilding());
-        toUpdate.setFlat(user.getFlat());
-        toUpdate.setCity(user.getCity());
-        toUpdate.setZipCode(user.getZipCode());
-        toUpdate.setPesel(user.getPesel());
-        toUpdate.setPhone(user.getPhone());
-        userService.saveUser(toUpdate);
-        Set<User> users = userService.findAllUsersById();
-        modelAndView.addObject("users", users);
-        modelAndView.addObject("user",new User());
-        modelAndView.setViewName("admin/users");
-        return modelAndView;
+
+
+        try
+        {
+            userService.saveUser(user);
+            String message = "User [email="+user.getEmail()+"] has been added successfully!";
+            modelAndView.addObject("message",message);
+        }catch(Exception e)
+        {
+            String errorMessage = "User with [email="+user.getEmail()+"] already exists!";
+            modelAndView.addObject("errorMessage",errorMessage);
+        }finally
+        {
+            Set<User> users = userService.findAllUsersById();
+            List<Role> roles = roleService.findAll();
+            modelAndView.addObject("roles",roles);
+            modelAndView.addObject("users", users);
+            modelAndView.addObject("user",new User());
+            modelAndView.setViewName("admin/users");
+            return modelAndView;
+        }
+
 
     }
 
@@ -66,7 +83,10 @@ public class AdminController {
             message = null;
             modelAndView.addObject("errorMessage",errorMessage);
         }finally {
+
             Set<User> users = userService.findAllUsersById();
+            List<Role> roles = roleService.findAll();
+            modelAndView.addObject("roles",roles);
             modelAndView.addObject("users",users);
             modelAndView.addObject("user",new User());
             modelAndView.addObject("message",message);

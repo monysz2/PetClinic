@@ -14,4 +14,6 @@ public interface AnimalRepository extends JpaRepository<Animal,Integer>{
     public Animal findById(long id);
     @Query("SELECT a FROM Animal a WHERE 1=1")
     public List<Animal> findAll();
+    @Query("SELECT a FROM Animal a WHERE a.owner.id=?")
+    public List<Animal> findUsersAnimals(long id);
 }

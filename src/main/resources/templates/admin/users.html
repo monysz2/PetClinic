@@ -40,6 +40,7 @@
 	
 	<div class="container">
 		<div class="row">
+			<button id="addUser"  type="button" class="btn btn-success"  data-toggle="modal" data-target="#addUserModal">New User</button>
 
 			<table class="table table-hover">
 				<thead>
@@ -79,92 +80,7 @@
 			</table>
 
 		</div>
-		<div class="row">
-			<form th:action="@{/admin/users}" method="post" class="form-horizontal">
-				<fieldset>
 
-					<!-- Form Name -->
-					<legend>Add User details</legend>
-
-					<!-- Select Basic -->
-					<div class="form-group">
-						<label class="col-md-4 control-label" for="user">Select user</label>
-						<div class="col-md-4">
-							<select th:field="${user.email}" id="user" name="user" class="form-control">
-								<option th:each="user1 : ${users}" th:value="${user1.getEmail()}" th:text="${user1.getName()}+','+${user1.getLastName()}+'('+${user1.getEmail()}+')'"></option>
-							</select>
-						</div>
-					</div>
-
-					<!-- Text input-->
-					<div class="form-group">
-						<label class="col-md-4 control-label" for="city">City</label>
-						<div class="col-md-4">
-							<input th:filed="${user.city}" id="city" name="city" type="text" placeholder="city" class="form-control input-md" required="">
-
-						</div>
-					</div>
-
-					<!-- Text input-->
-					<div class="form-group">
-						<label class="col-md-4 control-label" for="zip">Zip code</label>
-						<div class="col-md-2">
-							<input th:field="${user.zipCode}" id="zip" name="zip" type="text" placeholder="XX-XXX" class="form-control input-md" required="">
-
-						</div>
-					</div>
-
-					<!-- Text input-->
-					<div class="form-group">
-						<label class="col-md-4 control-label" for="building">Building</label>
-						<div class="col-md-2">
-							<input th:field="${user.building}" id="building" name="building" type="text" placeholder="" class="form-control input-md" required="">
-
-						</div>
-					</div>
-
-					<!-- Text input-->
-					<div class="form-group">
-						<label class="col-md-4 control-label" for="flat">Flat</label>
-						<div class="col-md-2">
-							<input th:field="${user.flat}" id="flat" name="flat" type="text" placeholder="" class="form-control input-md">
-
-						</div>
-					</div>
-
-					<!-- Text input-->
-					<div class="form-group">
-						<label class="col-md-4 control-label" for="pesel">PESEL</label>
-						<div class="col-md-4">
-							<input th:field="${user.pesel}" id="pesel" name="pesel" type="text" placeholder="XXXXXXXXXX" class="form-control input-md" required="">
-
-						</div>
-					</div>
-
-					<!-- Prepended text-->
-					<div class="form-group">
-						<label class="col-md-4 control-label" for="phone">Phone</label>
-						<div class="col-md-4">
-							<div class="input-group">
-								<span class="input-group-addon">+48</span>
-								<input th:field="${user.phone}" id="phone" name="phone" class="form-control" placeholder="XXX-XXX-XXX" type="text" required="">
-							</div>
-
-						</div>
-					</div>
-
-					<!-- Button -->
-					<div class="form-group">
-						<label class="col-md-4 control-label" for="add"></label>
-						<div class="col-md-4">
-							<button type="submit" id="add" name="add" class="btn btn-primary">Submit</button>
-						</div>
-					</div>
-
-				</fieldset>
-			</form>
-
-		</div>
 	</div>
 
 
@@ -243,6 +159,115 @@
 			</div>
 		</div>
 	</div>
+
+	<div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="addUserModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="addUserModalLabel">Modal title</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form th:action="@{/admin/users}" th:object="${user}" method="post">
+					<div class="form-group row">
+						<label for="email" class="col-4 col-form-label">Email</label>
+						<div class="col-8">
+							<div class="input-group">
+								<div class="input-group-addon">
+									<i class="fa fa-address-card"></i>
+								</div>
+								<input id="email" name="email" placeholder="example@domain.com" type="text" class="form-control here" required="required">
+							</div>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="name" class="col-4 col-form-label">Name</label>
+						<div class="col-8">
+							<input id="name" name="name" placeholder="Name" type="text" class="form-control here" required="required">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="lastName" class="col-4 col-form-label">Last name</label>
+						<div class="col-8">
+							<input id="lastName" name="lastName" placeholder="Last name" type="text" class="form-control here">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="pesel" class="col-4 col-form-label">PESEL</label>
+						<div class="col-8">
+							<input id="pesel" name="pesel" placeholder="XXXXXXXXXXX" type="text" class="form-control here" required="required">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="city" class="col-4 col-form-label">City</label>
+						<div class="col-8">
+							<input id="city" name="city" placeholder="City" type="text" class="form-control here" required="required">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="street" class="col-4 col-form-label">Street</label>
+						<div class="col-8">
+							<input id="street" name="street" placeholder="Street" type="text" class="form-control here" required="required">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="building" class="col-4 col-form-label">Building</label>
+						<div class="col-8">
+							<input id="building" name="building" placeholder="Building" type="text" class="form-control here" required="required">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="flat" class="col-4 col-form-label">Flat</label>
+						<div class="col-8">
+							<input id="flat" name="flat" placeholder="Flat" type="text" class="form-control here">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="zipCode" class="col-4 col-form-label">Flat</label>
+						<div class="col-8">
+							<input id="zipCode" name="zipCode" placeholder="XX-XXX" type="text" class="form-control here">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="phone" class="col-4 col-form-label">Phone</label>
+						<div class="col-8">
+							<div class="input-group">
+								<div class="input-group-addon">+48</div>
+								<input id="phone" name="phone" placeholder="000-000-000" type="text" class="form-control here" required="required">
+							</div>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="roles" class="col-4 col-form-label">Role</label>
+						<div class="col-8">
+							<select id="roles" name="roles" class="custom-select" required="required">
+							<option th:each="role : ${roles}" th:text="${role.getRole()}" th:value="${role.getId()}"></option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="password" class="col-4 col-form-label">Password</label>
+						<div class="col-8">
+							<div class="input-group">
+								<input id="password" name="password"  type="password" class="form-control here" required="required">
+							</div>
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="offset-4 col-8">
+							<button name="submit" type="submit" class="btn btn-primary">Submit</button>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+			</div>
+		</div>
+	</div>
+</div>
 
 </body>
 </html>
