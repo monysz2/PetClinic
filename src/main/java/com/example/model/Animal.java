@@ -1,15 +1,15 @@
 package com.example.model;
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnJava;
-
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table(name="animals")
 public class Animal {
-    @Id
+
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="id")
+    @Id
     private long id;
     @Column(name="name")
     private String name;
@@ -26,9 +26,6 @@ public class Animal {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="breed_id")
     private Breed breed;
-    @OneToOne(fetch = FetchType.EAGER)
-    @MapsId
-    private Color color;
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name = "doctor_id")
     private Doctor doctor;
@@ -87,14 +84,6 @@ public class Animal {
 
     public void setBreed(Breed breed) {
         this.breed = breed;
-    }
-
-    public Color getColor() {
-        return color;
-    }
-
-    public void setColor(Color color) {
-        this.color = color;
     }
 
     public Doctor getDoctor() {
