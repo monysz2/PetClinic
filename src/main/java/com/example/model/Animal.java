@@ -24,8 +24,9 @@ public class Animal {
     @Column(name="sex")
     @Enumerated(EnumType.STRING)
     private AnimalSex sex;
+
     @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="owner_id")
+    @JoinColumn(name="owner_id" )
     private User owner;
 
     @Column(name="breed")
@@ -90,4 +91,6 @@ public class Animal {
     public void setAnimalType(AnimalType animalType) {
         this.animalType = animalType;
     }
+
+
 }

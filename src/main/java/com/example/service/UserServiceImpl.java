@@ -2,6 +2,7 @@ package com.example.service;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.hibernate.Query;
@@ -54,5 +55,8 @@ public class UserServiceImpl implements UserService{
 		userRepository.removeUserById(id);
 	}
 
-
+	@Override
+	public List<User> findAll() {
+		return userRepository.findAll();
+	}
 }
