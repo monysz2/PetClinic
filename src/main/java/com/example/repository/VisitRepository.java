@@ -13,6 +13,7 @@ import java.util.Set;
 @Repository("visitRepository")
 public interface VisitRepository extends JpaRepository<Visit, Integer> {
 
-
     public List<Visit> findAllByDate(Date date);
+    @Query("SELECT v FROM Visit v WHERE v.animal.owner.id=?")
+    public List<Visit> findAllUsersHistoricVisits(long user);
 }

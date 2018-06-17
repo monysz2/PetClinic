@@ -10,4 +10,5 @@ public interface VisitService {
     public List<WorkingHours> findFreeHoursAtDate(Date date);
     public void saveVisit(Visit visit);
     public List<Visit> findAll();
+    public List<Visit> findAllHistoricUsersVisits(long userId);
 }

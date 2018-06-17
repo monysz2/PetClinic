@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>PetClinic</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/registration.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/scrolling-nav.css}"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+          integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.js"
+            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+            integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+            integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"
+            integrity="sha256-H3cjtrm/ztDeuhCN9I4yh4iN2Ybx/y1RM7rMmAesA0k=" crossorigin="anonymous"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.css"/>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.js"></script>
+    <meta charset="UTF-8">
+    <script>
+        $(document).ready(function() {
+            $('#petsTable').DataTable();
+        } );
+
+        function displayVisitDetails(date,hour,description,animal,notes)
+        {
+          document.getElementById("visitDate").innerHTML = date;
+          document.getElementById("visitHour").innerHTML = hour;
+          document.getElementById("visitDescription").innerHTML = description;
+          document.getElementById("visitAnimal").innerHTML = animal;
+          document.getElementById("visitNotes").innerHTML = notes;
+        };
+    </script>
+</head>
+
+<body>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand js-scroll-trigger" th:href="@{/}">Home</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" th:href="@{/user/myPets}">Moje zwierzaki</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" th:href="@{/user/visits}">Wizyty</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" th:href="@{/user/details}">Moje dane</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<header class="bg-primary text-white">
+    <div class="container text-center">
+        <h1>Moje zwierzaki</h1>
+    </div>
+</header>
+<div class="container">
+    <div class="row">
+       <table class="table table-striped">
+           <thead>
+           <th>Data</th>
+           <th>Godzina</th>
+           <th>Zwierzak</th>
+           <th>Cel wizyty</th>
+           </thead>
+           <tbody>
+           <tr th:each="visit : ${visits}" th:unless="${visit.isCompleted()}">
+               <td th:text="${visit.getDate()}"></td>
+               <td th:text="${visit.getHour().name()}"></td>
+               <td th:text="${visit.getAnimal().getName()}"></td>
+               <td th:text="${visit.getDescription()}"></td>
+           </tr>
+           </tbody>
+       </table>
+    </div>
+    <div class="row">
+        <div class="col-8">
+        <table id="petsTable" class="table display table-striped table-bordered" style="width:100%">
+            <thead>
+            <th>Data</th>
+            <th>Godzina</th>
+            <th>Opis</th>
+            <th>Zierzak</th>
+            <th>Opis</th>
+            </thead>
+            <tbody>
+            <tr th:each="visit : ${visits}" th:if="${visit.isCompleted()}">
+                <td th:text="${visit.getDate()}"></td>
+                <td th:text="${visit.getHour().name()}"></td>
+                <td th:text="${visit.getDescription()}"></td>
+                <td th:text="${visit.getAnimal().getName()}"></td>
+                <td>
+                    <button class="btn btn-primary" th:onclick="|displayVisitDetails('${visit.getDate()}','${visit.getHour().name()}','${visit.getDescription()}','${visit.getAnimal().getName()}','${visit.getNotes()}')|" type="button" data-toggle="collapse" data-target="#visitDetails" aria-expanded="false" aria-controls="collapseExample">
+                        Details
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+        <div class="col-4">
+            <div class="collapse" id="visitDetails">
+                <div class="card card-body">
+                    <table class="table table-striped">
+                        <tr>
+                            <td>Data</td>
+                            <td id="visitDate"></td>
+                        </tr>
+                        <tr>
+                            <td>Godzina</td>
+                            <td id="visitHour"></td>
+                        </tr>
+                        <tr>
+                            <td>Cel wizyty</td>
+                            <td id="visitDescription"></td>
+                        </tr>
+                        <tr>
+                            <td>Zmierzak</td>
+                            <td id="visitAnimal"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" id="visitNotes"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
+
+

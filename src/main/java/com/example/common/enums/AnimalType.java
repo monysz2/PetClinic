@@ -2,7 +2,7 @@ package com.example.common.enums;
 
 public enum AnimalType {
     CAT("Kot"),
-    DOG("PIes"),
+    DOG("Pies"),
     RAT("Szczur"),
     RABBIT("Królik"),
     HAMSTER("Chomik");

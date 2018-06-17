@@ -29,4 +29,9 @@ public class VisitServiceImpl implements VisitService {
     public List<Visit> findAll() {
         return visitRepository.findAll();
     }
+
+    @Override
+    public List<Visit> findAllHistoricUsersVisits(long userId) {
+        return visitRepository.findAllUsersHistoricVisits(userId);
+    }
 }

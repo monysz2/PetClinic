@@ -22,14 +22,7 @@
             integrity="sha256-H3cjtrm/ztDeuhCN9I4yh4iN2Ybx/y1RM7rMmAesA0k=" crossorigin="anonymous"></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.css"/>
-    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.js"></script>
-    <meta charset="UTF-8">
-    <script>
-        $(document).ready(function() {
-            $('#petsTable').DataTable();
-        } );
-    </script>
+
 </head>
 
 <body>
@@ -59,34 +52,10 @@
 
 <header class="bg-primary text-white">
     <div class="container text-center">
-        <h1>Moje zwierzaki</h1>
+        <h1>Panel Użytkownika</h1>
+        <p class="lead">Zarządzanie użytkownikami i wizytami</p>
     </div>
 </header>
-<div class="container">
-    <table id="petsTable" class="table display table-striped table-bordered" style="width:100%">
-        <thead>
-        <th>Name</th>
-        <th>Species</th>
-        <th>Breed</th>
-        <th>Birth date</th>
-        <th>Sex</th>
-        <th>Options</th>
-        </thead>
-        <tbody>
-        <tr th:each="pet : ${pets}">
-            <td th:text="${pet.getName()}"></td>
-            <td th:text="${pet.getAnimalType()}"></td>
-            <td th:text="${pet.getBreed()}"></td>
-            <td th:text="${pet.getDateOfBirth()}"></td>
-            <td th:text="${pet.getSex()}"></td>
-             <td>History</td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-
-
+test + menu
 </body>
 </html>
-
-

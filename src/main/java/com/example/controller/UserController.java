@@ -2,8 +2,10 @@ package com.example.controller;
 
 import com.example.model.Animal;
 import com.example.model.User;
+import com.example.model.Visit;
 import com.example.service.AnimalService;
 import com.example.service.UserService;
+import com.example.service.VisitService;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -24,6 +26,9 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    VisitService visitService;
+
     @RequestMapping(value = "user/myPets", method = RequestMethod.GET)
     public ModelAndView myPets()
     {
@@ -35,6 +40,19 @@ public class UserController {
         modelAndView.addObject("pets",animals);
         modelAndView.addObject("user",user);
         modelAndView.setViewName("user/myPets");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "user/visits", method = RequestMethod.GET)
+    public ModelAndView visits()
+    {
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String name = authentication.getName();
+        User user = userService.findUserByEmail(name);
+        List<Visit> visits = visitService.findAllHistoricUsersVisits(user.getId());
+        modelAndView.addObject("visits",visits);
+        modelAndView.setViewName("user/visits");
         return modelAndView;
     }
 }
