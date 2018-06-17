@@ -105,7 +105,10 @@
                 <td th:text="${an.getBreed()}"></td>
                 <td th:text="${an.getOwner().getLastName()}"></td>
                 <td>
-                    s
+                    <button id="edit" th:onclick="|alert('Not implemented yet');|" type="button"
+                            class="btn btn-primary" data-toggle="modal" >
+                        Edytuj
+                    </button>
                 </td>
                 <td>
                     <button id="delete" th:onclick="|setPetIdToDelete(${an.getId()})|" type="button" class="btn btn-danger"  data-toggle="modal" data-target="#deletePetModal">
@@ -122,61 +125,6 @@
 </div>
 
 
-<div class="modal fade" id="userDetailModal" tabindex="-1" role="dialog" aria-labelledby="petDetailModal" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="userDetailModalTitle">Dane zwierzaka</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <table class="table table-striped">
-                    <tr>
-                        <td>Imie</td>
-                        <td id="detailName"></td>
-                    </tr>
-                    <tr>
-                        <td>Data Urodzenia</td>
-                        <td id="detailLastName"></td>
-                    </tr>
-                    <tr>
-                        <td>PESEL</td>
-                        <td id="detailPesel"></td>
-                    </tr>
-                    <tr>
-                        <td>City</td>
-                        <td id="detailCity"></td>
-                    </tr>
-                    <tr>
-                        <td>ZIP code</td>
-                        <td id="detailZipCode"></td>
-                    </tr>
-                    <tr>
-                        <td>Street</td>
-                        <td id="detailStreet"></td>
-                    </tr>
-                    <tr>
-                        <td>Building</td>
-                        <td id="detailBuilding"></td>
-                    </tr>
-                    <tr>
-                        <td>Flat</td>
-                        <td id="detailFlat"></td>
-                    </tr>
-                    <tr>
-                        <td>Phone</td>
-                        <td id="detailPhone"></td>
-                    </tr>
-                </table>
-            </div>
-            <div class="model-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
 <!-- Modal -->
 <div class="modal fade" id="deletePetModal" tabindex="-1" role="dialog" aria-labelledby="deletePetModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -192,7 +140,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
-                <a href="#" id="deleteHref" class="btn btn-warning">Usuń</a>
+                <a onclick="alert('Not implemented yet'); return false;" id="deleteHref" class="btn btn-warning">Usuń</a>
             </div>
         </div>
     </div>

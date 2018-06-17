@@ -24,9 +24,7 @@ public class Visit {
     @Column(name="notes")
     private String notes;
 
-
-
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @MapsId
     private Animal animal;
 
