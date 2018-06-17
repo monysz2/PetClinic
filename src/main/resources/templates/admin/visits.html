@@ -4,22 +4,33 @@
 
 <head>
     <title>PetClinic</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/registration.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/registration.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/scrolling-nav.css}"/>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+          integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.js"
+            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+            integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+            integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+            crossorigin="anonymous"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
     <script>
-        $(document).ready(function(){
+        $(document).ready(function () {
             $("#date").datepicker({
                 format: 'mm/dd/yyyy',
                 todayHighlight: true,
                 autoclose: true
             });
-        })
+        });
+
     </script>
 </head>
 
@@ -62,7 +73,9 @@
 
 <div class="container">
     <div class="row">
-        <button id="addPet"  type="button" class="btn btn-success"  data-toggle="modal" data-target="#addVisitModal">Nowa wizyta</button>
+        <button id="addPet" type="button" class="btn btn-success" data-toggle="modal" data-target="#addVisitModal">Nowa
+            wizyta
+        </button>
 
         <table class="table table-hover">
             <thead>
@@ -83,7 +96,8 @@
                 <td th:text="${v.getAnimal().getName()}"></td>
                 <td th:text="${v.isCompleted()}"></td>
                 <td>
-                    <button id="delete" th:onclick="|setPetIdToDelete(${an.getId()})|" type="button" class="btn btn-danger"  data-toggle="modal" data-target="#deletePetModal">
+                    <button id="delete" th:onclick="|alert('Not implemented yet');|" type="button"
+                            class="btn btn-danger" data-toggle="modal" data-target="#deletePetModal">
                         Zakończ
                     </button>
                 </td>
@@ -97,7 +111,8 @@
 </div>
 
 
-<div class="modal fade" id="addVisitModal" tabindex="-1" role="dialog" aria-labelledby="addVisitModalLabel" aria-hidden="true">
+<div class="modal fade" id="addVisitModal" tabindex="-1" role="dialog" aria-labelledby="addVisitModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -111,7 +126,8 @@
                     <div class="form-group row">
                         <label for="description" class="col-4 col-form-label">opis</label>
                         <div class="col-8">
-                            <input id="description" name="description" placeholder="opis" type="text" class="form-control here">
+                            <input id="description" name="description" placeholder="opis" type="text"
+                                   class="form-control here">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -120,19 +136,22 @@
                             <input id="date" name="date" placeholder="MM/DD/YYY" type="text" class="form-control here">
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label for="pets" class="col-4 col-form-label">Zwierzę</label>
+                    <div class="form-group row" th:fragment="resultsList" id="results-block">
+                        <label for="hours" class="col-4 col-form-label">Godzina</label>
                         <div class="col-8">
-                            <select id="pets" name="animal.id" class="custom-select" required="required">
-                                <option th:each="p : ${pets}" th:text="${'Name: ' + p.getName() + ' | Właściciel: ' + p.getOwner().getLastName()}" th:value="${p.getId()}"></option>
+                            <select id="hours" name="hour" class="custom-select" required="required">
+                                <option th:each="h : ${hours}" th:text="${h.getName()}" th:value="${h}"></option>
                             </select>
                         </div>
                     </div>
+
                     <div class="form-group row">
-                        <label for="hours" class="col-4 col-form-label">Zwierzę</label>
+                        <label for="pet" class="col-4 col-form-label">Zwierzę</label>
                         <div class="col-8">
-                            <select id="hours" name="hour" class="custom-select" required="required" onchange="">
-                                <option th:each="p : ${pets}" th:text="${'Name: ' + p.getName() + ' | Właściciel: ' + p.getOwner().getLastName()}" th:value="${p.getId()}"></option>
+                            <select id="pet" name="animal.id" class="custom-select" required="required" onchange="">
+                                <option th:each="p : ${pets}"
+                                        th:text="${'Name: ' + p.getName() + ' | Właściciel: ' + p.getOwner().getLastName()}"
+                                        th:value="${p.getId()}"></option>
                             </select>
                         </div>
                     </div>
