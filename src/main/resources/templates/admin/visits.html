@@ -83,22 +83,37 @@
                 <th scope="col">id</th>
                 <th scope="col">data</th>
                 <th scope="col">godzina</th>
+                <th scope="col">zwierzę</th>
                 <th scope="col">opis</th>
                 <th scope="col">zakończona</th>
-                <th colspan="2">akcje</th>
+                <th colspan="3">akcje</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="v : ${visits}">
                 <td th:text="${v.getId()}"></td>
                 <td th:text="${v.getDate()}"></td>
-                <td th:text="${v.getHour()}"></td>
+                <td th:text="${v.getHour().getName()}"></td>
+
                 <td th:text="${v.getAnimal().getName()}"></td>
+                <td th:text="${v.getDescription()}"></td>
                 <td th:text="${v.isCompleted()}"></td>
+               <td>
+                    <button id="revert" th:onclick="|alert('Not implemented yet');|" type="button"
+                            class="btn btn-danger" data-toggle="modal" data-target="#deletePetModal">
+                        Anuluj
+                    </button>
+                </td>
                 <td>
                     <button id="delete" th:onclick="|alert('Not implemented yet');|" type="button"
-                            class="btn btn-danger" data-toggle="modal" data-target="#deletePetModal">
+                            class="btn btn-success" data-toggle="modal" data-target="#deletePetModal">
                         Zakończ
+                    </button>
+                </td>
+                <td>
+                    <button id="edit" th:onclick="|alert('Not implemented yet');|" type="button"
+                            class="btn btn-primary" data-toggle="modal" data-target="#deletePetModal">
+                        Edytuj
                     </button>
                 </td>
 

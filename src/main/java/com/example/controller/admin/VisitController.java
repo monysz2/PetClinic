@@ -11,14 +11,12 @@ import com.example.service.UserService;
 import com.example.service.VisitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -52,14 +50,28 @@ public class VisitController {
     }
 
     @RequestMapping(value = "/admin/visits", method = RequestMethod.POST)
-    public ModelAndView addUser(@Valid Animal pet, BindingResult bindingResult) {
+    public ModelAndView addUser(@Valid Visit visit, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
+
+        try {
+            visitService.saveVisit(visit);
+
+            String message = "Visit [desc=" + visit.getDescription() + "] has been added successfully!";
+            modelAndView.addObject("message", message);
+        } catch (Exception e) {
+            String errorMessage = "Visit [desc=" + visit.getDescription() + "] failed!";
+            modelAndView.addObject("errorMessage", errorMessage);
+        } finally {
+            List<Animal> pets = animalService.findAll();
+            List<Visit> visits = visitService.findAll();
+            modelAndView.addObject("pets", pets);
+            modelAndView.addObject("visit", visit);
+            modelAndView.addObject("visits", visits);
+            modelAndView.addObject("hours", WorkingHours.values());
 
             modelAndView.setViewName("admin/visits");
 
             return modelAndView;
-
-
-
+        }
     }
 }
