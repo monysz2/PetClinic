@@ -28,6 +28,9 @@ public class Visit {
     @MapsId
     private Animal animal;
 
+    @Column(name="complete")
+    private boolean completed;
+
     public long getId() {
         return id;
     }
@@ -74,5 +77,13 @@ public class Visit {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
 }

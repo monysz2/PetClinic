@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
     <script>
         $(document).ready(function(){
-            $("#dateOfBirth").datepicker({
+            $("#date").datepicker({
                 format: 'mm/dd/yyyy',
                 todayHighlight: true,
                 autoclose: true
@@ -37,7 +37,7 @@
                     <a class="nav-link js-scroll-trigger" th:href="@{/admin/users}">Użytkownicy</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger active" th:href="@{/admin/users}">Wizyty</a>
+                    <a class="nav-link js-scroll-trigger active" th:href="@{/admin/visits}">Wizyty</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link js-scroll-trigger" th:href="@{/admin/pets}">Zwierzaki</a>
@@ -50,7 +50,7 @@
 <header class="bg-primary text-white">
     <div class="container text-center">
         <h1>Panel Administratora</h1>
-        <p class="lead">Zarządzanie zwierzakami</p>
+        <p class="lead">Zarządzanie wizytami</p>
     </div>
 </header>
 <div class="row justify-content-center">
@@ -62,36 +62,29 @@
 
 <div class="container">
     <div class="row">
-        <button id="addPet"  type="button" class="btn btn-success"  data-toggle="modal" data-target="#addPetModal">Nowy Zwierzak</button>
+        <button id="addPet"  type="button" class="btn btn-success"  data-toggle="modal" data-target="#addVisitModal">Nowa wizyta</button>
 
         <table class="table table-hover">
             <thead>
             <tr>
                 <th scope="col">id</th>
-                <th scope="col">imie</th>
-                <th scope="col">data urodzenia</th>
-                <th scope="col">płeć</th>
-                <th scope="col">gatunek</th>
-                <th scope="col">rasa</th>
-                <th scope="col">właściciel</th>
+                <th scope="col">data</th>
+                <th scope="col">godzina</th>
+                <th scope="col">opis</th>
+                <th scope="col">zakończona</th>
                 <th colspan="2">akcje</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="an : ${pets}">
-                <td th:text="${an.getId()}"></td>
-                <td th:text="${an.getName()}"></td>
-                <td th:text="${an.getDateOfBirth()}"></td>
-                <td th:text="${an.getSex()}"></td>
-                <td th:text="${an.getAnimalType()!=null?an.getAnimalType().getName():''}"></td>
-                <td th:text="${an.getBreed()}"></td>
-                <td th:text="${an.getOwner().getLastName()}"></td>
-                <td>
-                    s
-                </td>
+            <tr th:each="v : ${visits}">
+                <td th:text="${v.getId()}"></td>
+                <td th:text="${v.getDate()}"></td>
+                <td th:text="${v.getHour()}"></td>
+                <td th:text="${v.getAnimal().getName()}"></td>
+                <td th:text="${v.isCompleted()}"></td>
                 <td>
                     <button id="delete" th:onclick="|setPetIdToDelete(${an.getId()})|" type="button" class="btn btn-danger"  data-toggle="modal" data-target="#deletePetModal">
-                        Delete
+                        Zakończ
                     </button>
                 </td>
 
@@ -104,138 +97,48 @@
 </div>
 
 
-<div class="modal fade" id="userDetailModal" tabindex="-1" role="dialog" aria-labelledby="petDetailModal" aria-hidden="true">
+<div class="modal fade" id="addVisitModal" tabindex="-1" role="dialog" aria-labelledby="addVisitModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="userDetailModalTitle">Dane zwierzaka</h5>
+                <h5 class="modal-title" id="addVisitModalLabel">Dodawanie Zwierzaka</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <table class="table table-striped">
-                    <tr>
-                        <td>Imie</td>
-                        <td id="detailName"></td>
-                    </tr>
-                    <tr>
-                        <td>Data Urodzenia</td>
-                        <td id="detailLastName"></td>
-                    </tr>
-                    <tr>
-                        <td>PESEL</td>
-                        <td id="detailPesel"></td>
-                    </tr>
-                    <tr>
-                        <td>City</td>
-                        <td id="detailCity"></td>
-                    </tr>
-                    <tr>
-                        <td>ZIP code</td>
-                        <td id="detailZipCode"></td>
-                    </tr>
-                    <tr>
-                        <td>Street</td>
-                        <td id="detailStreet"></td>
-                    </tr>
-                    <tr>
-                        <td>Building</td>
-                        <td id="detailBuilding"></td>
-                    </tr>
-                    <tr>
-                        <td>Flat</td>
-                        <td id="detailFlat"></td>
-                    </tr>
-                    <tr>
-                        <td>Phone</td>
-                        <td id="detailPhone"></td>
-                    </tr>
-                </table>
-            </div>
-            <div class="model-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Modal -->
-<div class="modal fade" id="deletePetModal" tabindex="-1" role="dialog" aria-labelledby="deletePetModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deletePetModalLabel">Usunięcie zwierzaka</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Czy jesteś pewien, że chcesz usunąć zwierzaka?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
-                <a href="#" id="deleteHref" class="btn btn-warning">Usuń</a>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="addPetModal" tabindex="-1" role="dialog" aria-labelledby="addAddModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addUserModalLabel">Dodawanie Zwierzaka</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form th:action="@{/admin/pets}" th:object="${pet}" method="post">
+                <form th:action="@{/admin/visits}" th:object="${visit}" method="post">
                     <div class="form-group row">
-                        <label for="name" class="col-4 col-form-label">imie</label>
+                        <label for="description" class="col-4 col-form-label">opis</label>
                         <div class="col-8">
-                            <input id="name" name="name" placeholder="imie" type="text" class="form-control here">
+                            <input id="description" name="description" placeholder="opis" type="text" class="form-control here">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="dateOfBirth" class="col-4 col-form-label">Data urodzenia</label>
+                        <label for="date" class="col-4 col-form-label">Data</label>
                         <div class="col-8">
-                            <input id="dateOfBirth" name="dateOfBirth" placeholder="MM/DD/YYY" type="text" class="form-control here">
+                            <input id="date" name="date" placeholder="MM/DD/YYY" type="text" class="form-control here">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="owners" class="col-4 col-form-label">Właściciel</label>
+                        <label for="pets" class="col-4 col-form-label">Zwierzę</label>
                         <div class="col-8">
-                            <select id="owners" name="owner.id" class="custom-select" required="required">
-                                <option th:each="o : ${users}" th:text="${o.getLastName()}" th:value="${o.getId()}"></option>
+                            <select id="pets" name="animal.id" class="custom-select" required="required">
+                                <option th:each="p : ${pets}" th:text="${'Name: ' + p.getName() + ' | Właściciel: ' + p.getOwner().getLastName()}" th:value="${p.getId()}"></option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="sex" class="col-4 col-form-label">Płeć</label>
+                        <label for="hours" class="col-4 col-form-label">Zwierzę</label>
                         <div class="col-8">
-                            <select id="sex" name="sex" class="custom-select" required="required">
-                                <option th:each="s : ${sexDic}" th:text="${s}" th:value="${s}"></option>
+                            <select id="hours" name="hour" class="custom-select" required="required" onchange="">
+                                <option th:each="p : ${pets}" th:text="${'Name: ' + p.getName() + ' | Właściciel: ' + p.getOwner().getLastName()}" th:value="${p.getId()}"></option>
                             </select>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="animalType" class="col-4 col-form-label">Rodzaj zwierzęcia</label>
-                        <div class="col-8">
-                            <select id="animalType" name="animalType" class="custom-select" required="required">
-                                <option th:each="s : ${animalType}" th:text="${s.getName()}" th:value="${s}"></option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="breed" class="col-4 col-form-label">Gatunek</label>
-                        <div class="col-8">
-                            <input id="breed" name="breed" placeholder="gatunek" type="text" class="form-control here">
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="offset-4 col-8">
-                            <button name="submit" type="submit" class="btn btn-primary">Zapisz</button>
+                            <button name="submit" type="submit" class="btn btn-primary">Zarezerwuj</button>
                         </div>
                     </div>
                 </form>
