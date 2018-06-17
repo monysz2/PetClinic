@@ -3,14 +3,14 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Spring Security Tutorial</title>
+    <title>PetClinic</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/registration.css}" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
     <script>
-        function setUserDetails(name,lastName,pesel,city,zipCode,street,building,flat,phone) {
+        function setPetDetails(name,lastName,pesel,city,zipCode,street,building,flat,phone) {
             document.getElementById('detailName').innerHTML=name;
             document.getElementById('detailLastName').innerHTML=lastName;
             document.getElementById('detailPesel').innerHTML=pesel;
@@ -40,19 +40,17 @@
 
 <div class="container">
     <div class="row">
-        <button id="addUser"  type="button" class="btn btn-success"  data-toggle="modal" data-target="#addUserModal">New User</button>
+        <button id="addPet"  type="button" class="btn btn-success"  data-toggle="modal" data-target="#addPetModal">Nowy Zwierzak</button>
 
         <table class="table table-hover">
             <thead>
             <tr>
-                <th scope="col">USER ID</th>
-                <th scope="col">ACTIVE</th>
-                <th scope="col">EMAIL</th>
-                <th scope="col">LAST NAME</th>
-                <th scope="col">NAME</th>
-                <th scope="col">PASSWORD</th>
-                <th scope="col">ROLE</th>
-                <th colspan="2">OPTIONS</th>
+                <th scope="col">id</th>
+                <th scope="col">imie</th>
+                <th scope="col">data urodzenia</th>
+                <th scope="col">gatunek</th>
+                <th scope="col">rasa</th>
+                <th colspan="2">właściciel</th>
             </tr>
             </thead>
             <tbody>
