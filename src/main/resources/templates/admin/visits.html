@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>PetClinic</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/registration.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/scrolling-nav.css}"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+    <script>
+        $(document).ready(function(){
+            $("#dateOfBirth").datepicker({
+                format: 'mm/dd/yyyy',
+                todayHighlight: true,
+                autoclose: true
+            });
+        })
+    </script>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand js-scroll-trigger" th:href="@{/}">Home</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" th:href="@{/admin/users}">Użytkownicy</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger active" th:href="@{/admin/users}">Wizyty</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" th:href="@{/admin/pets}">Zwierzaki</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<header class="bg-primary text-white">
+    <div class="container text-center">
+        <h1>Panel Administratora</h1>
+        <p class="lead">Zarządzanie zwierzakami</p>
+    </div>
+</header>
+<div class="row justify-content-center">
+    <div class="alert alert-success" role="alert" th:if="${message != null}" th:text="${message}">
+    </div>
+    <div class="alert alert-danger" role="alert" th:if="${errorMessage != null}" th:text="${errorMessage}">
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <button id="addPet"  type="button" class="btn btn-success"  data-toggle="modal" data-target="#addPetModal">Nowy Zwierzak</button>
+
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">imie</th>
+                <th scope="col">data urodzenia</th>
+                <th scope="col">płeć</th>
+                <th scope="col">gatunek</th>
+                <th scope="col">rasa</th>
+                <th scope="col">właściciel</th>
+                <th colspan="2">akcje</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="an : ${pets}">
+                <td th:text="${an.getId()}"></td>
+                <td th:text="${an.getName()}"></td>
+                <td th:text="${an.getDateOfBirth()}"></td>
+                <td th:text="${an.getSex()}"></td>
+                <td th:text="${an.getAnimalType()!=null?an.getAnimalType().getName():''}"></td>
+                <td th:text="${an.getBreed()}"></td>
+                <td th:text="${an.getOwner().getLastName()}"></td>
+                <td>
+                    s
+                </td>
+                <td>
+                    <button id="delete" th:onclick="|setPetIdToDelete(${an.getId()})|" type="button" class="btn btn-danger"  data-toggle="modal" data-target="#deletePetModal">
+                        Delete
+                    </button>
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+
+
+<div class="modal fade" id="userDetailModal" tabindex="-1" role="dialog" aria-labelledby="petDetailModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="userDetailModalTitle">Dane zwierzaka</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-striped">
+                    <tr>
+                        <td>Imie</td>
+                        <td id="detailName"></td>
+                    </tr>
+                    <tr>
+                        <td>Data Urodzenia</td>
+                        <td id="detailLastName"></td>
+                    </tr>
+                    <tr>
+                        <td>PESEL</td>
+                        <td id="detailPesel"></td>
+                    </tr>
+                    <tr>
+                        <td>City</td>
+                        <td id="detailCity"></td>
+                    </tr>
+                    <tr>
+                        <td>ZIP code</td>
+                        <td id="detailZipCode"></td>
+                    </tr>
+                    <tr>
+                        <td>Street</td>
+                        <td id="detailStreet"></td>
+                    </tr>
+                    <tr>
+                        <td>Building</td>
+                        <td id="detailBuilding"></td>
+                    </tr>
+                    <tr>
+                        <td>Flat</td>
+                        <td id="detailFlat"></td>
+                    </tr>
+                    <tr>
+                        <td>Phone</td>
+                        <td id="detailPhone"></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="model-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="deletePetModal" tabindex="-1" role="dialog" aria-labelledby="deletePetModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deletePetModalLabel">Usunięcie zwierzaka</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Czy jesteś pewien, że chcesz usunąć zwierzaka?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+                <a href="#" id="deleteHref" class="btn btn-warning">Usuń</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addPetModal" tabindex="-1" role="dialog" aria-labelledby="addAddModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addUserModalLabel">Dodawanie Zwierzaka</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form th:action="@{/admin/pets}" th:object="${pet}" method="post">
+                    <div class="form-group row">
+                        <label for="name" class="col-4 col-form-label">imie</label>
+                        <div class="col-8">
+                            <input id="name" name="name" placeholder="imie" type="text" class="form-control here">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="dateOfBirth" class="col-4 col-form-label">Data urodzenia</label>
+                        <div class="col-8">
+                            <input id="dateOfBirth" name="dateOfBirth" placeholder="MM/DD/YYY" type="text" class="form-control here">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="owners" class="col-4 col-form-label">Właściciel</label>
+                        <div class="col-8">
+                            <select id="owners" name="owner.id" class="custom-select" required="required">
+                                <option th:each="o : ${users}" th:text="${o.getLastName()}" th:value="${o.getId()}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="sex" class="col-4 col-form-label">Płeć</label>
+                        <div class="col-8">
+                            <select id="sex" name="sex" class="custom-select" required="required">
+                                <option th:each="s : ${sexDic}" th:text="${s}" th:value="${s}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="animalType" class="col-4 col-form-label">Rodzaj zwierzęcia</label>
+                        <div class="col-8">
+                            <select id="animalType" name="animalType" class="custom-select" required="required">
+                                <option th:each="s : ${animalType}" th:text="${s.getName()}" th:value="${s}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="breed" class="col-4 col-form-label">Gatunek</label>
+                        <div class="col-8">
+                            <input id="breed" name="breed" placeholder="gatunek" type="text" class="form-control here">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="offset-4 col-8">
+                            <button name="submit" type="submit" class="btn btn-primary">Zapisz</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
