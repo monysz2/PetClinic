@@ -9,18 +9,10 @@ public class Doctor {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    @OneToOne(fetch = FetchType.EAGER)
-    @MapsId
-    private User user;
-    @OneToOne(fetch = FetchType.EAGER)
-    @MapsId
-    private WorkingHours workingHours;
-    @OneToMany(
-            mappedBy = "doctor",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    private Set<Animal> animals;
+    @Column(name="firstname")
+    private String firstName;
+    @Column(name="lastname")
+    private String lastName;
 
     public long getId() {
         return id;
@@ -30,27 +22,19 @@ public class Doctor {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public WorkingHours getWorkingHours() {
-        return workingHours;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setWorkingHours(WorkingHours workingHours) {
-        this.workingHours = workingHours;
-    }
-
-    public Set<Animal> getAnimals() {
-        return animals;
-    }
-
-    public void setAnimals(Set<Animal> animals) {
-        this.animals = animals;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 }

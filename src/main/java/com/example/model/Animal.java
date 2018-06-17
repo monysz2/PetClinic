@@ -20,15 +20,9 @@ public class Animal {
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="owner_id")
     private User owner;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="species_id")
-    private Species species;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="breed_id")
-    private Breed breed;
-    @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name = "doctor_id")
-    private Doctor doctor;
+
+    @Column(name="breed")
+    private String breed;
 
     public long getId() {
         return id;
@@ -70,27 +64,11 @@ public class Animal {
         this.owner = owner;
     }
 
-    public Species getSpecies() {
-        return species;
-    }
-
-    public void setSpecies(Species species) {
-        this.species = species;
-    }
-
-    public Breed getBreed() {
+    public String getBreed() {
         return breed;
     }
 
-    public void setBreed(Breed breed) {
+    public void setBreed(String breed) {
         this.breed = breed;
-    }
-
-    public Doctor getDoctor() {
-        return doctor;
-    }
-
-    public void setDoctor(Doctor doctor) {
-        this.doctor = doctor;
     }
 }

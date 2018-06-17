@@ -11,18 +11,19 @@ public class Visit {
     private long id;
     @Column(name="date")
     private java.util.Date date;
+
+    @Column(name="description")
+    private String description;
+
+    @Column(name="notes")
+    private String notes;
+
     @OneToOne(fetch = FetchType.EAGER)
     @MapsId
     private Animal animal;
     @OneToOne(fetch = FetchType.EAGER)
     @MapsId
-    private Room room;
-    @OneToOne(fetch = FetchType.EAGER)
-    @MapsId
     private Doctor doctor;
-    @OneToOne(fetch = FetchType.EAGER)
-    @MapsId
-    private VisitType visitType;
 
     public long getId() {
         return id;
@@ -48,15 +49,7 @@ public class Visit {
         this.animal = animal;
     }
 
-    public Room getRoom() {
-        return room;
-    }
-
-    public void setRoom(Room room) {
-        this.room = room;
-    }
-
-    public Doctor getDoctor() {
+   public Doctor getDoctor() {
         return doctor;
     }
 
@@ -64,11 +57,4 @@ public class Visit {
         this.doctor = doctor;
     }
 
-    public VisitType getVisitType() {
-        return visitType;
-    }
-
-    public void setVisitType(VisitType visitType) {
-        this.visitType = visitType;
-    }
 }
