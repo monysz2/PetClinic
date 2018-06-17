@@ -5,7 +5,9 @@ import com.example.common.enums.AnimalType;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="animals")
@@ -35,6 +37,21 @@ public class Animal {
     @Column(name="animal_type")
     @Enumerated(EnumType.STRING)
     private AnimalType animalType;
+
+    public List<Visit> getVisits() {
+        return visits;
+    }
+
+    public void setVisits(List<Visit> visits) {
+        this.visits = visits;
+    }
+
+    @OneToMany(
+    mappedBy = "animal",
+    cascade = CascadeType.ALL,
+    orphanRemoval = true
+            )
+    private List<Visit> visits = new ArrayList<>();
 
     public long getId() {
         return id;

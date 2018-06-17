@@ -24,8 +24,9 @@ public class Visit {
     @Column(name="notes")
     private String notes;
 
-    @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @MapsId
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "animal_id")
     private Animal animal;
 
     @Column(name="complete")

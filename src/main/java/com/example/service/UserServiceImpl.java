@@ -26,8 +26,10 @@ public class UserServiceImpl implements UserService{
 
 	@Autowired
 	private UserRepository userRepository;
+
 	@Autowired
-    private RoleRepository roleRepository;
+	private RoleRepository roleRepository;
+
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
@@ -40,6 +42,12 @@ public class UserServiceImpl implements UserService{
 	public void saveUser(User user) {
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(1);
+		userRepository.save(user);
+	}
+
+	@Override
+	public void updateUser(User user)
+	{
 		userRepository.save(user);
 	}
 
@@ -59,4 +67,11 @@ public class UserServiceImpl implements UserService{
 	public List<User> findAll() {
 		return userRepository.findAll();
 	}
+
+	@Override
+	public User findById(long id) {
+		return userRepository.findUserById(id);
+	}
+
+
 }

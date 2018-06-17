@@ -71,7 +71,11 @@
         <h1>Moje zwierzaki</h1>
     </div>
 </header>
+
 <div class="container">
+    <div class="row">
+        <h2>Zaplanowane wizyty</h2>
+    </div>
     <div class="row">
        <table class="table table-striped">
            <thead>
@@ -83,12 +87,15 @@
            <tbody>
            <tr th:each="visit : ${visits}" th:unless="${visit.isCompleted()}">
                <td th:text="${visit.getDate()}"></td>
-               <td th:text="${visit.getHour().name()}"></td>
+               <td th:text="${visit.getHour().getName()}"></td>
                <td th:text="${visit.getAnimal().getName()}"></td>
                <td th:text="${visit.getDescription()}"></td>
            </tr>
            </tbody>
        </table>
+    </div>
+    <div class="row">
+        <h2>Historia wizyt</h2>
     </div>
     <div class="row">
         <div class="col-8">
@@ -103,11 +110,11 @@
             <tbody>
             <tr th:each="visit : ${visits}" th:if="${visit.isCompleted()}">
                 <td th:text="${visit.getDate()}"></td>
-                <td th:text="${visit.getHour().name()}"></td>
+                <td th:text="${visit.getHour().getName()}"></td>
                 <td th:text="${visit.getDescription()}"></td>
                 <td th:text="${visit.getAnimal().getName()}"></td>
                 <td>
-                    <button class="btn btn-primary" th:onclick="|displayVisitDetails('${visit.getDate()}','${visit.getHour().name()}','${visit.getDescription()}','${visit.getAnimal().getName()}','${visit.getNotes()}')|" type="button" data-toggle="collapse" data-target="#visitDetails" aria-expanded="false" aria-controls="collapseExample">
+                    <button class="btn btn-primary" th:onclick="|displayVisitDetails('${visit.getDate()}','${visit.getHour().getName()}','${visit.getDescription()}','${visit.getAnimal().getName()}','${visit.getNotes()}')|" type="button" data-toggle="collapse" data-target="#visitDetails" aria-expanded="false" aria-controls="collapseExample">
                         Details
                     </button>
                 </td>
@@ -134,6 +141,9 @@
                         <tr>
                             <td>Zmierzak</td>
                             <td id="visitAnimal"></td>
+                        </tr>
+                        <tr class="bg-primary" >
+                            <td colspan="2">Opis wizyty</td>
                         </tr>
                         <tr>
                             <td colspan="2" id="visitNotes"></td>
