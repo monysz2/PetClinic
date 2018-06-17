@@ -9,4 +9,5 @@ public interface AnimalService {
     public Animal findById(long id);
     public void addAnimal(Animal animal);
     public List<Animal> findUsersAnimals(long userId);
+    public void saveAnimal(Animal animal);
 }

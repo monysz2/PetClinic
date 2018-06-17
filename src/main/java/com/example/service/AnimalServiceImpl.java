@@ -31,4 +31,9 @@ public class AnimalServiceImpl implements AnimalService {
     public List<Animal> findUsersAnimals(long userId) {
         return animalRepository.findUsersAnimals(userId);
     }
+
+    @Override
+    public void saveAnimal(Animal animal) {
+        animalRepository.save(animal);
+    }
 }

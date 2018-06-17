@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Spring Security Tutorial</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/registration.css}" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+    <script>
+        function setUserDetails(name,lastName,pesel,city,zipCode,street,building,flat,phone) {
+            document.getElementById('detailName').innerHTML=name;
+            document.getElementById('detailLastName').innerHTML=lastName;
+            document.getElementById('detailPesel').innerHTML=pesel;
+            document.getElementById('detailCity').innerHTML=city;
+            document.getElementById('detailZipCode').innerHTML=zipCode;
+            document.getElementById('detailStreet').innerHTML=street;
+            document.getElementById('detailBuilding').innerHTML=building;
+            document.getElementById('detailFlat').innerHTML=flat;
+            document.getElementById('detailPhone').innerHTML=phone;
+        };
+
+        function setUserIdToDelete(id)
+        {
+            document.getElementById('deleteHref').href='/admin/users/del='.concat(id);
+
+        };
+    </script>
+</head>
+
+<body>
+<div class="row justify-content-center">
+    <div class="alert alert-success" role="alert" th:if="${message != null}" th:text="${message}">
+    </div>
+    <div class="alert alert-danger" role="alert" th:if="${errorMessage != null}" th:text="${errorMessage}">
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <button id="addUser"  type="button" class="btn btn-success"  data-toggle="modal" data-target="#addUserModal">New User</button>
+
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">USER ID</th>
+                <th scope="col">ACTIVE</th>
+                <th scope="col">EMAIL</th>
+                <th scope="col">LAST NAME</th>
+                <th scope="col">NAME</th>
+                <th scope="col">PASSWORD</th>
+                <th scope="col">ROLE</th>
+                <th colspan="2">OPTIONS</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user1 : ${users}">
+                <td th:text="${user1.getId()}"></td>
+                <td th:text="${user1.getActive()}"></td>
+                <td th:text="${user1.getEmail()}"></td>
+                <td th:text="${user1.getLastName()}"></td>
+                <td th:text="${user1.getName()}"></td>
+                <td th:text="${user1.getPassword()}"></td>
+                <td th:text="${user1.getRole()}"></td>
+                <td>
+                    <button id="edit" th:onclick="|setUserDetails('${user1.getName()}','${user1.getLastName()}','${user1.getPesel()}','${user1.getCity()}','${user1.getZipCode()}','${user1.getStreet()}','${user1.getBuilding()}','${user1.getFlat()}','${user1.getPhone()}')|" type="button" class="btn btn-primary"  data-toggle="modal" data-target="#userDetailModal">
+                        Details
+                    </button>
+                </td>
+                <td>
+                    <button id="delete" th:onclick="|setUserIdToDelete(${user1.getId()})|" type="button" class="btn btn-danger"  data-toggle="modal" data-target="#deleteUserModal">
+                        Delete
+                    </button>
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+
+
+<div class="modal fade" id="userDetailModal" tabindex="-1" role="dialog" aria-labelledby="userDetailModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="userDetailModalTitle">User details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-striped">
+                    <tr>
+                        <td>Name</td>
+                        <td id="detailName"></td>
+                    </tr>
+                    <tr>
+                        <td>Last name</td>
+                        <td id="detailLastName"></td>
+                    </tr>
+                    <tr>
+                        <td>PESEL</td>
+                        <td id="detailPesel"></td>
+                    </tr>
+                    <tr>
+                        <td>City</td>
+                        <td id="detailCity"></td>
+                    </tr>
+                    <tr>
+                        <td>ZIP code</td>
+                        <td id="detailZipCode"></td>
+                    </tr>
+                    <tr>
+                        <td>Street</td>
+                        <td id="detailStreet"></td>
+                    </tr>
+                    <tr>
+                        <td>Building</td>
+                        <td id="detailBuilding"></td>
+                    </tr>
+                    <tr>
+                        <td>Flat</td>
+                        <td id="detailFlat"></td>
+                    </tr>
+                    <tr>
+                        <td>Phone</td>
+                        <td id="detailPhone"></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="model-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="deleteUserModal" tabindex="-1" role="dialog" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteUserModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure to delete this user?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <a href="#" id="deleteHref" class="btn btn-warning">Delete anyway</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="addUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addUserModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form th:action="@{/admin/users}" th:object="${user}" method="post">
+                    <div class="form-group row">
+                        <label for="email" class="col-4 col-form-label">Email</label>
+                        <div class="col-8">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-address-card"></i>
+                                </div>
+                                <input id="email" name="email" placeholder="example@domain.com" type="text" class="form-control here" required="required">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="name" class="col-4 col-form-label">Name</label>
+                        <div class="col-8">
+                            <input id="name" name="name" placeholder="Name" type="text" class="form-control here" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="lastName" class="col-4 col-form-label">Last name</label>
+                        <div class="col-8">
+                            <input id="lastName" name="lastName" placeholder="Last name" type="text" class="form-control here">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="pesel" class="col-4 col-form-label">PESEL</label>
+                        <div class="col-8">
+                            <input id="pesel" name="pesel" placeholder="XXXXXXXXXXX" type="text" class="form-control here" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="city" class="col-4 col-form-label">City</label>
+                        <div class="col-8">
+                            <input id="city" name="city" placeholder="City" type="text" class="form-control here" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="street" class="col-4 col-form-label">Street</label>
+                        <div class="col-8">
+                            <input id="street" name="street" placeholder="Street" type="text" class="form-control here" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="building" class="col-4 col-form-label">Building</label>
+                        <div class="col-8">
+                            <input id="building" name="building" placeholder="Building" type="text" class="form-control here" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="flat" class="col-4 col-form-label">Flat</label>
+                        <div class="col-8">
+                            <input id="flat" name="flat" placeholder="Flat" type="text" class="form-control here">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="zipCode" class="col-4 col-form-label">Flat</label>
+                        <div class="col-8">
+                            <input id="zipCode" name="zipCode" placeholder="XX-XXX" type="text" class="form-control here">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="phone" class="col-4 col-form-label">Phone</label>
+                        <div class="col-8">
+                            <div class="input-group">
+                                <div class="input-group-addon">+48</div>
+                                <input id="phone" name="phone" placeholder="000-000-000" type="text" class="form-control here" required="required">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="roles" class="col-4 col-form-label">Role</label>
+                        <div class="col-8">
+                            <select id="roles" name="roles" class="custom-select" required="required">
+                                <option th:each="role : ${roles}" th:text="${role.getRole()}" th:value="${role.getId()}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="password" class="col-4 col-form-label">Password</label>
+                        <div class="col-8">
+                            <div class="input-group">
+                                <input id="password" name="password"  type="password" class="form-control here" required="required">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="offset-4 col-8">
+                            <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
