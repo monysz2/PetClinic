@@ -1,5 +1,7 @@
 package com.example.model;
 
+import com.example.common.enums.WorkingHours;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -12,6 +14,10 @@ public class Visit {
     @Column(name="date")
     private java.util.Date date;
 
+    @Column(name="hour")
+    @Enumerated(EnumType.STRING)
+    private WorkingHours hour;
+
     @Column(name="description")
     private String description;
 
@@ -21,9 +27,6 @@ public class Visit {
     @OneToOne(fetch = FetchType.EAGER)
     @MapsId
     private Animal animal;
-    @OneToOne(fetch = FetchType.EAGER)
-    @MapsId
-    private Doctor doctor;
 
     public long getId() {
         return id;
@@ -49,12 +52,27 @@ public class Visit {
         this.animal = animal;
     }
 
-   public Doctor getDoctor() {
-        return doctor;
+    public WorkingHours getHour() {
+        return hour;
     }
 
-    public void setDoctor(Doctor doctor) {
-        this.doctor = doctor;
+    public void setHour(WorkingHours hour) {
+        this.hour = hour;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
 }
