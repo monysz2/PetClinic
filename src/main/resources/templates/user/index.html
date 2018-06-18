@@ -56,6 +56,35 @@
         <p class="lead">Zarządzanie użytkownikami i wizytami</p>
     </div>
 </header>
-test + menu
+<div class="container">
+    <div class="row">
+        <div class="card-deck">
+            <div class="card">
+                <div class="card-img-top"><img th:src="@{/images/pet.png}"></div>
+                <div class="card-body">
+                    <h5 class="card-title">Moje zwierzaki</h5>
+                    <p class="card-text">Przeglądaj dane swoich zwierzaków.</p>
+                    <a th:href="@{/user/myPets}" class="btn btn-primary">Przejdź do strony</a>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-img-top"><img th:src="@{/images/visit.png}"></div>
+                <div class="card-body">
+                    <h5 class="card-title">Moje wizyty</h5>
+                    <p class="card-text">Przeglądaj zaplanowane wizity oraz historię.</p>
+                    <a th:href="@{/user/visits}" class="btn btn-primary">Przejdź do strony</a>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-img-top"><img th:src="@{/images/details.png}"></div>
+                <div class="card-body">
+                    <h5 class="card-title">Moje dane osobowe</h5>
+                    <p class="card-text">Przeglądaj swoje dane osobowe. Zmieniaj je. Zresetuj hasło.</p>
+                    <a th:href="@{/user/details}" class="btn btn-primary">Przejdź do strony</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

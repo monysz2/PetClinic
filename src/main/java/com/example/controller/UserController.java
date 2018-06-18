@@ -195,4 +195,12 @@ public class UserController {
         modelAndView.setViewName("user/details");
         return modelAndView;
     }
+
+    @RequestMapping(value="user/index", method = RequestMethod.GET)
+    public ModelAndView userIndex()
+    {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("user/index");
+        return modelAndView;
+    }
 }

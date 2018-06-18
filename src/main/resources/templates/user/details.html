@@ -81,14 +81,20 @@
 </div>
 
 <div class="container">
-    <div class="row">
-        <h2>Moje dane</h2>
+    <div class="row" style="margin-top:15px;">
+        <div class="col-md-6">
+            <h2>Moje dane</h2>
+        </div>
+        <div class="col-md-2">
+            <button id="edit" class="btn btn-warning float-right" th:onclick="|enableUserDetails()|" type="button" data-toggle="collapse" aria-expanded="false">
+                Zaktualizuj dane
+            </button>
+        </div>
+        <div class="col-md-4">
+            <h2>Zmień hasło</h2>
+        </div>
     </div>
-    <div class="row">
-        <button id="edit" class="btn btn-warning" th:onclick="|enableUserDetails()|" type="button" data-toggle="collapse" aria-expanded="false">
-            Zaktualizuj dane
-        </button>
-    </div>
+
     <div class="row">
         <div class="col-md-8">
         <form th:action="@{/user/details}" th:object="${updateUser}" method="post">
@@ -147,7 +153,7 @@
             </div>
             <div class="form-row">
                 <div class="form-group col-md-4">
-                    <label for="pesel" class="col-4 col-form-label">PESEL</label>
+                    <label for="pesel">PESEL</label>
                     <input th:value="${user.getPesel()}" id="pesel" name="pesel" placeholder="XXXXXXXXXXX" type="text"
                            class="form-control here" required="required" disabled="disabled">
                 </div>
@@ -181,6 +187,7 @@
                 <input class="form-control" name="oldPassword" id="oldPassword" type="password">
             </div>
             <div class="form-group">
+                <label for="newPassword">Nowe hasło</label>
                 <input class="form-control" name="newPassword" id="newPassword" type="password">
             </div>
             <div class="form-group">
@@ -188,9 +195,9 @@
                 <input class="form-control" name="newPassword1" id="newPassword1" type="password">
             </div>
             <div class="form-group">
-                <div class="col-8">
+
                     <button id="zmienHaslo" name="submit" type="submit" class="btn btn-primary">Zmień hasło</button>
-                </div>
+
             </div>
         </form>
         </div>

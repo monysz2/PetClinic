@@ -65,12 +65,11 @@
 <div class="container">
     <table id="petsTable" class="table display table-striped table-bordered" style="width:100%">
         <thead>
-        <th>Name</th>
-        <th>Species</th>
-        <th>Breed</th>
-        <th>Birth date</th>
-        <th>Sex</th>
-        <th>Options</th>
+        <th>Imię</th>
+        <th>Rasa</th>
+        <th>Gatunek</th>
+        <th>Data urodzenia</th>
+        <th>Płeć</th>
         </thead>
         <tbody>
         <tr th:each="pet : ${pets}">
@@ -79,7 +78,6 @@
             <td th:text="${pet.getBreed()}"></td>
             <td th:text="${pet.getDateOfBirth()}"></td>
             <td th:text="${pet.getSex()}"></td>
-             <td>History</td>
         </tr>
         </tbody>
     </table>
