@@ -12,6 +12,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.css"/>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.js"></script>
     <script>
         function setPetDetails(name,lastName,pesel,city,zipCode,street,building,flat,phone) {
             document.getElementById('detailName').innerHTML=name;
@@ -37,7 +39,11 @@
               todayHighlight: true,
               autoclose: true
           });
-        })
+        });
+
+        $(document).ready(function() {
+            $('#petsTable').DataTable();
+        } );
     </script>
 </head>
 
@@ -79,10 +85,11 @@
 </div>
 
 <div class="container">
+    <button id="addPet"  type="button" class="btn btn-success"  data-toggle="modal" data-target="#addPetModal">Nowy Zwierzak</button>
     <div class="row">
-        <button id="addPet"  type="button" class="btn btn-success"  data-toggle="modal" data-target="#addPetModal">Nowy Zwierzak</button>
 
-        <table class="table table-hover">
+
+        <table id="petsTable" class="table table-hover">
             <thead>
             <tr>
                 <th scope="col">id</th>
@@ -92,7 +99,7 @@
                 <th scope="col">Gatunek</th>
                 <th scope="col">Rasa</th>
                 <th scope="col">Właściciel</th>
-                <th colspan="2">Akcje</th>
+                <th scope="col">Akcje</th>
             </tr>
             </thead>
             <tbody>
@@ -109,8 +116,7 @@
                             class="btn btn-primary" data-toggle="modal" >
                         Edytuj
                     </button>
-                </td>
-                <td>
+
                     <button id="delete" th:onclick="|setPetIdToDelete(${an.getId()})|" type="button" class="btn btn-danger"  data-toggle="modal" data-target="#deletePetModal">
                         Delete
                     </button>

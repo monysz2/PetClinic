@@ -104,7 +104,7 @@
                 <th scope="col">Nazwisko</th>
                 <th scope="col">Imie</th>
                 <th scope="col">Rola</th>
-                <th colspan="2">Akcje</th>
+                <th scope="col">Akcje</th>
             </tr>
             </thead>
             <tbody>
@@ -121,8 +121,7 @@
                             type="button" class="btn btn-primary" data-toggle="modal" data-target="#userDetailModal">
                         Details
                     </button>
-                </td>
-                <td>
+
                     <button id="delete" th:onclick="|setUserIdToDelete(${user1.getId()})|" type="button"
                             class="btn btn-danger" data-toggle="modal" data-target="#deleteUserModal">
                         Delete
